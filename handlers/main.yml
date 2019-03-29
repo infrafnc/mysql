@@ -1,0 +1,6 @@
+---
+- name: Start Mysql
+  service: name=mariadb state=started enabled=yes
+
+- name: Restart Mysql
+  service: name=mariadb state=restarted

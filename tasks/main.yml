@@ -1,0 +1,10 @@
+---
+- name: Instala o MySQL
+  import_tasks: install.yml
+
+- name: Configura o MySQL
+  import_tasks: configure.yml
+
+- name: Configura o secure_installation do MySQL
+  import_tasks: secure-installation.yml
+

@@ -1,0 +1,18 @@
+---
+- name: Instala a library MySQL-python
+  yum:
+    name: 'MySQL-python'
+    state: present
+
+- name: Instala o MariaDB
+  yum:
+    name: mariadb-server
+    state: present
+  register: mariadb_installed
+
+- name: Sobe o serviço do mariadb se a instalação concluir com sucesso
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+  when: mariadb_installed.changed

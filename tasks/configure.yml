@@ -1,0 +1,23 @@
+---
+- name: Garante que o MySQL Datadir existe
+  file:
+    path: "{{ mysql_datadir }}"
+    state: directory
+    owner: "{{ mysql_daemon_user }}"
+    group: "{{ mysql_daemon_user }}"
+    mode: 0755
+
+- name: Copia o arquivo my.cnf do template
+  template:
+    src: my.cnf.j2
+    dest: "{{ mysql_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  register: arquivo_copiado
+
+- name: Restarta o serviço do MariaDB após a copia do arquivo my.cnf
+  service:
+    name: mariadb
+    state: restarted
+  when: arquivo_copiado.changed
